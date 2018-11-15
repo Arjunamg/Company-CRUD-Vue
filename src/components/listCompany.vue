@@ -11,8 +11,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="company in companies" :key="company.name" >
-          <td>{{ company.name }}</td>
+        <tr v-for="company in companies" :key="company._id" >
+          <td>{{ company.name }} {{company._id}}</td>
           <td>{{ company.address }}</td>
           <td>{{ company.city }}</td>
           <td>
@@ -56,29 +56,32 @@ export default {
   data() {
     return {
       isActive:false,
-      compnyId:null
+      compnyId:null,
+      company:{}
     };
   },
   methods: {
     deleteCompany(id) {
       this.isActive=true;
-      this.compnyId = id;
+       this.compnyId = id;
+      //this.company = id
 
     },
     deleteCom(){
       console.log(this.compnyId);
-     this.$store.dispatch("DELETE_COMPANY",this.compnyId);
+      this.$store.dispatch("DELETE_COMPANY",this.compnyId);
       this.closeModal();
+      //this.$router.push({name:'companylist'})
       this.$store.dispatch("GET_COMPANY");
       //this.$store.getters.COMPANIES;
-      //this.$router.push({name:'AddCompany'})
+      
     },
     closeModal(){
       this.isActive=false;
     }
   },
   // updated() {
-  //   this.$store.getters.COMPANIES;
+  //   return this.$store.dispatch("GET_COMPANY");
   // },
   created() {
      return this.$store.dispatch("GET_COMPANY");
